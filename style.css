@@ -1,1 +1,14 @@
+
 /* FAITES ICI UN CSS PROPRE */
+tr:nth-child(even){
+    background-color:#f0f0f0;
+}
+tr:nth-child(odd){
+    background-color:white;
+}
+tr:first-child{
+    font-weight: bold;
+}
+tr:last-child{
+    border-bottom: 3px solid red;
+}
