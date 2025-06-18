@@ -1,0 +1,15 @@
+.citation::before{
+content: "<";
+}
+.citation::after{
+    content: ">";
+}
+.author::before{
+    content: "____";
+    font-weight: bold;
+}
+
+.citation::first-letter{
+    color: red;
+}
+
