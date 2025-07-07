@@ -62,6 +62,7 @@ Méthode	Route	Description
 ## Règles à suivre
 Structure de projet
 
+```
 projet-crud-json/
 │
 ├── serveur.js
@@ -71,6 +72,7 @@ projet-crud-json/
 │   └── file.js
 ├── data/
 │   └── users.json
+```
 
 ### Recommandations
 
