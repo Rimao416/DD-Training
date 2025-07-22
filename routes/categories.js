@@ -2,8 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/Category');
+const { protect } = require('../controllers/authController');
 
 // GET - Toutes les catégories avec hiérarchie
+router.use(protect)
 router.get('/', async (req, res) => {
   try {
     const categories = await Category.find()

@@ -4,8 +4,11 @@ const router = express.Router();
 const Department = require("../models/Department");
 const Professor = require("../models/Professor");
 const Student = require("../models/Student");
+const { protect, restrictTo } = require("../controllers/authController");
 
 // GET Obtenir - Tous les départements
+router.use(protect);
+router.use(restrictTo("admin","user"));
 router.get("/", async (req, res) => {
   try {
     const departments = await Department.find();

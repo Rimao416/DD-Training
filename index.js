@@ -10,6 +10,7 @@ const bookRoutes = require("./routes/books");
 // const studentRoutes = require('./routes/students');
 // const professorRoutes = require('./routes/professors');
 const categoryRoutes = require("./routes/categories");
+const userRoutes = require("./routes/auth");
 const borrowingRoutes = require("./routes/borrowings");
 const reviewRoutes = require("./routes/reviews");
 const departmentRoutes = require("./routes/departments");
@@ -20,32 +21,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // CONNEXION À LA BASE DE DONN EE
-mongoose
-  .connect(process.env.DATABASE)
-  .then(() => {
-    console.log("Connexion réussie");
-  });
+mongoose.connect(process.env.DATABASE).then(() => {
+  console.log("Connexion réussie");
+});
 
+const port = process.env.PORT || 5000;
 
-  const port = process.env.PORT || 5000;
-
-  app.use('/api/authors', authorRoutes);
-app.use('/api/books', bookRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/api/authors", authorRoutes);
+app.use("/api/books", bookRoutes);
 // app.use('/api/students', studentRoutes);
 // app.use('/api/professors', professorRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/borrowings', borrowingRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api/departments', departmentRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/borrowings", borrowingRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/departments", departmentRoutes);
 
-
- app.listen(port, () => {
+app.listen(port, () => {
   console.log(`App running on port ${port}`);
 });
 
-
-module.exports=app
-
+module.exports = app;
 
 // LOCAL, EN LIGNE
 // Les deux
