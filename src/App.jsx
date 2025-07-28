@@ -1,10 +1,13 @@
+import "./App.css"
+
+
 
 function App() {
-
-
+  
   return (
     <>
-   <h1>sALUT</h1>
+<Header/>
+   
     </>
   )
 }
