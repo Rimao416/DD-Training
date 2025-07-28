@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { forgotPassword, updatePassword } = require("../controllers/authController");
 
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -9,7 +10,7 @@ const signToken = (id) => {
   });
 };
 
-const createSendToken = (user, statusCode, res) => {
+createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     expires: new Date(
@@ -60,5 +61,8 @@ router.post("/login", async (req, res) => {
   }
   createSendToken(user, 200, res);
 });
+
+router.post("/forgotPassword",forgotPassword)
+router.patch("/updatePassword/:token",updatePassword)
 
 module.exports = router;
