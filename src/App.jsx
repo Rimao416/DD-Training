@@ -1,23 +1,93 @@
-import { useState } from "react"
-import "./App.css"
+import { useState } from "react";
+import './App.css';
 
+const App = () => {
+  const [todos, setTodos] = useState([]);
+  const [nouveau, setNouveauTodo] = useState('');
+  const [filtre, setFiltre] = useState('tous');
 
-function App() {
-  // useState
-  const [compteur,setCompteur]=useState(0)
-   return (
-    <>
-    <h1>{compteur}</h1>
-    <div className="presentation">
-  <button class="btn" onClick={()=>setCompteur(compteur+1)}>Incremneter</button>
-  <button class="btn" onClick={()=>setCompteur(compteur-1)}>Decrementer</button>
+  const ajouterTodo = (e) => {
+    e.preventDefault();
+    if (nouveau.trim()) {
+      setTodos([
+        ...todos,
+        {
+          id: Date.now(),
+          text: nouveau.trim(),
+          complete: false
+        }
+      ]);
+      setNouveauTodo('');
+    }
+  };
 
+  const toggleTodo = (id) => {
+    setTodos(todos.map(todo =>
+      todo.id === id ? { ...todo, complete: !todo.complete } : todo
+    ));
+  };
+
+  const todosFiltres = todos.filter((todo) => {
+    if (filtre === 'tous') return true;
+    if (filtre === 'complete') return todo.complete;
+    if (filtre === 'incomplete') return !todo.complete;
+    return true;
+  });
+
+  return (
+    <div className="app-container">
+      <h1>Ma todo Liste</h1>
+
+      <form className="todo-form" onSubmit={ajouterTodo}>
+        <input
+          type="text"
+          value={nouveau}
+          onChange={(e) => setNouveauTodo(e.target.value)}
+          placeholder="Ajouter une tâche"
+          required
+        />
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <div className="filters">
+        <button
+          onClick={() => setFiltre('tous')}
+          className={filtre === 'tous' ? 'active' : ''}
+        >
+          Tous
+        </button>
+        <button
+          onClick={() => setFiltre('complete')}
+          className={filtre === 'complete' ? 'active' : ''}
+        >
+          Complétés
+        </button>
+        <button
+          onClick={() => setFiltre('incomplete')}
+          className={filtre === 'incomplete' ? 'active' : ''}
+        >
+          Incomplets
+        </button>
+      </div>
+
+      {todosFiltres.length === 0 && (
+        <p className="empty-message">Aucune tâche</p>
+      )}
+
+      <div className="todo-list">
+        {todosFiltres.map((todo) => (
+          <div key={todo.id} className={`todo-item ${todo.complete ? 'done' : ''}`}>
+            <input
+              type="checkbox"
+              checked={todo.complete}
+              onChange={() => toggleTodo(todo.id)}
+            />
+            <span>{todo.text}</span>
+          </div>
+        ))}
+      </div>
     </div>
-    <p className="result">
-      On veut qu'en cliquant sur Incrementer que le chiffre augmente de 1 et en cliquant sur Decrementer que le chiffre diminue de 1
-    </p>
-    </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
