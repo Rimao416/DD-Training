@@ -1,25 +1,21 @@
+import { useState } from "react"
 import "./App.css"
 
 
-
-const Presentation=({nom})=>{
-  return(
-    <div className="presentation">
-  <h1>{nom}</h1>
-  <p>Bonsoir {nom}, deja felicitation d'avoir fini cette formation full Stack, je vous souhaite le meilleur</p>
-</div>
-  )
-}
-const nom=["Mr Author","Mr Louad","Mr Adlès","Mr Serge","Mr Christian","Mr Sinai","Mr Medy","Mr Oracle"]
-for (let index = 0; index < nom.length; index++) {
-  const element = nom[index];
-  console.log(element)
-  
-}
 function App() {
+  // useState
+  const [compteur,setCompteur]=useState(0)
    return (
     <>
-{nom.map((element,index)=><Presentation key={index} nom={element}/>)}
+    <h1>{compteur}</h1>
+    <div className="presentation">
+  <button class="btn" onClick={()=>setCompteur(compteur+1)}>Incremneter</button>
+  <button class="btn" onClick={()=>setCompteur(compteur-1)}>Decrementer</button>
+
+    </div>
+    <p className="result">
+      On veut qu'en cliquant sur Incrementer que le chiffre augmente de 1 et en cliquant sur Decrementer que le chiffre diminue de 1
+    </p>
     </>
   )
 }
