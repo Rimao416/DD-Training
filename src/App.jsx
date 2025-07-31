@@ -1,93 +1,24 @@
-import { useState } from "react";
 import './App.css';
-
+import {Routes, Route} from "react-router-dom";
+import Home from "./pages/Home";
+import About from './pages/About';
+import Contact from './pages/contact';
+import Dashboard from './pages/dashboard';
+import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 const App = () => {
-  const [todos, setTodos] = useState([]);
-  const [nouveau, setNouveauTodo] = useState('');
-  const [filtre, setFiltre] = useState('tous');
-
-  const ajouterTodo = (e) => {
-    e.preventDefault();
-    if (nouveau.trim()) {
-      setTodos([
-        ...todos,
-        {
-          id: Date.now(),
-          text: nouveau.trim(),
-          complete: false
-        }
-      ]);
-      setNouveauTodo('');
-    }
-  };
-
-  const toggleTodo = (id) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, complete: !todo.complete } : todo
-    ));
-  };
-
-  const todosFiltres = todos.filter((todo) => {
-    if (filtre === 'tous') return true;
-    if (filtre === 'complete') return todo.complete;
-    if (filtre === 'incomplete') return !todo.complete;
-    return true;
-  });
-
-  return (
-    <div className="app-container">
-      <h1>Ma todo Liste</h1>
-
-      <form className="todo-form" onSubmit={ajouterTodo}>
-        <input
-          type="text"
-          value={nouveau}
-          onChange={(e) => setNouveauTodo(e.target.value)}
-          placeholder="Ajouter une tâche"
-          required
-        />
-        <button type="submit">Ajouter</button>
-      </form>
-
-      <div className="filters">
-        <button
-          onClick={() => setFiltre('tous')}
-          className={filtre === 'tous' ? 'active' : ''}
-        >
-          Tous
-        </button>
-        <button
-          onClick={() => setFiltre('complete')}
-          className={filtre === 'complete' ? 'active' : ''}
-        >
-          Complétés
-        </button>
-        <button
-          onClick={() => setFiltre('incomplete')}
-          className={filtre === 'incomplete' ? 'active' : ''}
-        >
-          Incomplets
-        </button>
-      </div>
-
-      {todosFiltres.length === 0 && (
-        <p className="empty-message">Aucune tâche</p>
-      )}
-
-      <div className="todo-list">
-        {todosFiltres.map((todo) => (
-          <div key={todo.id} className={`todo-item ${todo.complete ? 'done' : ''}`}>
-            <input
-              type="checkbox"
-              checked={todo.complete}
-              onChange={() => toggleTodo(todo.id)}
-            />
-            <span>{todo.text}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return(
+ <Routes>
+  <Route path="/" element={<Home />}/>
+  <Route path="/about" element={<About />}/>
+  <Route path="/contact" element={<Contact />}/>
+  <Route path="/dashboard" element={<Dashboard/>}>
+    <Route path="profile" element={<Profile />} />
+    <Route path="settings" element={<Settings />} />
+  </Route>
+  {/* <Route path="/about" element={<About />} /> */}
+ </Routes>
+  )
 };
 
 export default App;
