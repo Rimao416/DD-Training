@@ -6,12 +6,14 @@ import Contact from './pages/contact';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import User from './pages/User';
 const App = () => {
   return(
  <Routes>
   <Route path="/" element={<Home />}/>
   <Route path="/about" element={<About />}/>
   <Route path="/contact" element={<Contact />}/>
+  <Route path="/user/:id" element={<User />} />
   <Route path="/dashboard" element={<Dashboard/>}>
     <Route path="profile" element={<Profile />} />
     <Route path="settings" element={<Settings />} />
