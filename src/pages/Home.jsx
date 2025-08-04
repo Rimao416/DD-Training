@@ -1,20 +1,50 @@
+import { useState } from "react";
 
-import Layout from "../components/Layout";
-import { UserProvider } from "../components/UserProvider";
-import useCounter from "../hooks/useCounter";
 
 function Home() {
-const {count,increment,decrement,reset}=useCounter();
-
+const [formData, setFormData] = useState({
+  nom: "---",
+  email: "---",
+  age: "---",
+});
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
 
   return (
-    <>
-    <h1>Bienvenue dans mon application</h1>
-    <button onClick={increment}>+</button>
-    <button onClick={decrement}>-</button>
-    <button onClick={reset}>reset</button>
-    <p>{count}</p>
-    </>
+    <form onSubmit={()=>console.log("Envoie")}>
+      <div>
+        <label htmlFor="">Nom</label>
+        <input type="text"
+        name="nom"
+        value="---"
+        onChange={handleChange}
+        required
+        />
+      </div>
+      <div>
+        <label htmlFor="">Email</label>
+        <input type="email"
+        name="email"
+        value="---"
+        onChange={handleChange}
+        required
+        />
+      </div>
+      <div>
+        <label htmlFor="">Age</label>
+        <input type="number"
+        name="age"
+        value="---"
+        onChange={handleChange}
+        required
+        />
+      </div>
+      <button type="submit">Envoyer</button>
+    </form>
   );
 }
 
