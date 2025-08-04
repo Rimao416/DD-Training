@@ -1,15 +1,13 @@
 import React from 'react'
-import {Link} from "react-router-dom"
-function Sidebar() {
+import UserPanel from './UserPanel'
+
+function Sidebar({user}) {
   return (
-    <aside className="sidebar">
-        <h2>Dashobard</h2> 
-        <nav>
-            <Link to="profile" className="link">Profile</Link>
-            <Link to="settings" className="link">settings</Link>
-            </nav>
-      
-    </aside>
+    <div style={{border:"2px solid blue",padding:"1rem"}}>
+          <h1>Sidebar {user.name} (Sidebar)</h1>
+          <UserPanel user={user}/>
+        
+      </div>
   )
 }
 
