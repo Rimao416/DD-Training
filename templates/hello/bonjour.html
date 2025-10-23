@@ -23,20 +23,43 @@
         }
         h1 {
             color: #667eea;
-            font-size: 3em;
-            margin: 0;
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
-        p {
-            color: #666;
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
             font-size: 1.2em;
+            color: #444;
+        }
+        .card {
+            background: #f8f8ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hello Django ! 🚀</h1>
-        <p>Bienvenue dans ton premier projet Django</p>
-        <p>L'heure actuelle : {{ heure_actuelle }}</p>
+        <h1>Liste des personnes 🚀</h1>
+        <ul>
+            {% for personne in personnes %}
+                <li class="card">
+                    <strong>{{ personne.nom }}</strong><br>
+                    Âge : {{ personne.age }} ans<br>
+                    Ville : {{ personne.ville }}
+                </li>
+                {% if personne.age > 70 %}
+                <h2>Monsieur {{personne.nom}} vous êtes banni</h2>
+
+                {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 </body>
 </html>
