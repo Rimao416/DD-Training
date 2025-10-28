@@ -1,0 +1,12 @@
+{% extends 'vitrine/base.html' %}
+
+{% block title %}{{ titre }} - Agence Créative{% endblock %}
+
+{% block content %}
+    <h1>{{ titre }}</h1>
+
+    <div class="card">
+        <p>{{ contenu }}</p>
+        <a href="{% url 'blog' %}" class="btn">← Retour au blog</a>
+    </div>
+{% endblock %}

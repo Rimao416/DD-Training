@@ -1,0 +1,17 @@
+{% extends 'vitrine/base.html' %}
+
+{% block title %}Blog - Agence Créative{% endblock %}
+
+{% block content %}
+    <h1>{{ titre }}</h1>
+
+    <div>
+        {% for article in articles %}
+            <div class="card">
+                <h2>{{ article.titre }}</h2>
+                <p><small>Par <strong>{{ article.auteur }}</strong> - {{ article.date }}</small></p>
+                <a href="{% url 'article_detail' article.id %}" class="btn">Lire l'article</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

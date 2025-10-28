@@ -1,0 +1,17 @@
+{% extends 'vitrine/base.html' %}
+
+{% block title %}Services - Agence Créative{% endblock %}
+
+{% block content %}
+    <h1>{{ titre }}</h1>
+
+    <div>
+        {% for service in services %}
+            <div class="card">
+                <h2>{{ service.nom }}</h2>
+                <p><strong>Prix :</strong> {{ service.prix }}</p>
+                <button class="btn">Demander un devis</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

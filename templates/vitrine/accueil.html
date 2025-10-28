@@ -1,0 +1,17 @@
+{% extends 'vitrine/base.html' %}
+
+{% block title %}Accueil - Agence Créative{% endblock %}
+
+{% block content %}
+    <h1>{{ titre }}</h1>
+
+    <div class="card">
+        <h2>Bienvenue sur notre site !</h2>
+        <p>Nous sommes une agence créative spécialisée dans le développement web et le design.</p>
+        <a href="{% url 'services' %}" class="btn">Découvrir nos services</a>
+    </div>
+
+    <div style="margin-top: 30px; text-align: center; color: #666;">
+        <p>Aujourd'hui : {{ date|date:"d F Y" }}</p>
+    </div>
+{% endblock %}
