@@ -8,10 +8,10 @@
     <div class="jumbotron bg-light p-5 rounded mb-5">
         <h1 class="display-4">Bienvenue sur BlogHub</h1>
         <p class="lead">Découvrez des articles passionnants et partagez vos idées avec la communauté.</p>
-      
+
     </div>
 
-
+    <!-- Article mis en avant -->
     {% if featured %}
     <section class="mb-5">
         <h2 class="mb-4">Article populaire</h2>
@@ -35,7 +35,7 @@
                                 <i class="fas fa-calendar"></i> {{ featured.created_at|date:"d M Y" }}
                             </small>
                         </p>
-                  
+                       
                     </div>
                 </div>
             </div>
@@ -47,9 +47,7 @@
     <section class="mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Articles récents</h2>
-            <a href="{% url 'blog:' %}" class="btn btn-outline-primary">
-                Voir tous les articles <i class="fas fa-arrow-right"></i>
-            </a>
+    
         </div>
         
         <div class="row">
@@ -77,9 +75,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="card-footer bg-transparent">
-                       
-                    </div>
+                  
                 </div>
             </div>
             {% empty %}
@@ -98,7 +94,7 @@
         <div class="row">
             {% for category in categories %}
             <div class="col-md-3 col-sm-6 mb-3">
-      
+             
                     <div class="card text-center">
                         <div class="card-body">
                             <h5 class="card-title">{{ category.name }}</h5>
