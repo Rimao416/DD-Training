@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} - BlogHub{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Article principal -->
+        <div class="col-lg-8">
+            <article class="card mb-4">
+                {% if article.image %}
+                <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}">
+                {% endif %}
+                
+                <div class="card-body">
+                    <!-- En-tête -->
+                    <div class="mb-3">
+                        <span class="badge badge-category">{{ article.category.name }}</span>
+                        {% for tag in article.tags.all %}
+                            <span class="badge bg-secondary">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <h1 class="card-title">{{ article.title }}</h1>
+                    
+                    <!-- Métadonnées -->
+                    <div class="text-muted mb-4">
+                        <i class="fas fa-user"></i> Par <strong>{{ article.author.username }}</strong> |
+                        <i class="fas fa-calendar"></i> {{ article.created_at|date:"d F Y" }} |
+                        <i class="fas fa-eye"></i> {{ article.views }} vues |
+                        <i class="fas fa-comments"></i> {{ article.comment_count }} commentaire{{ article.comment_count|pluralize }}
+                    </div>
+                    
+                    <!-- Contenu -->
+                    <div class="article-content">
+                        {{ article.content|linebreaks }}
+                    </div>
+                    
+                    <!-- Actions pour l'auteur -->
+                    {% if user == article.author %}
+                    <hr>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'blog:article_update' article.slug %}" 
+                           class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                        <a href="{% url 'blog:article_delete' article.slug %}" 
+                           class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </article>
+
+            <!-- Section commentaires -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3><i class="fas fa-comments"></i> Commentaires ({{ comments.count }})</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Formulaire d'ajout -->
+                    {% if user.is_authenticated %}
+                    <form method="post" class="mb-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ comment_form.content }}
+                            {% if comment_form.content.errors %}
+                                <div class="text-danger mt-1">
+                                    {{ comment_form.content.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Publier
+                        </button>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        <a href="{% url 'accounts:login' %}?next={{ request.path }}">Connectez-vous</a> 
+                        pour laisser un commentaire.
+                    </div>
+                    {% endif %}
+
+                    <hr>
+
+                    <!-- Liste des commentaires -->
+                    {% for comment in comments %}
+                    <div class="mb-3 p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between mb-2">
+                            <strong><i class="fas fa-user-circle"></i> {{ comment.author.username }}</strong>
+                            <small class="text-muted">{{ comment.created_at|date:"d M Y à H:i" }}</small>
+                        </div>
+                        <p class="mb-0">{{ comment.content|linebreaks }}</p>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted">Aucun commentaire pour le moment. Soyez le premier à commenter !</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- À propos de l'auteur -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="fas fa-user"></i> À propos de l'auteur</h5>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-user-circle fa-5x text-secondary mb-3"></i>
+                    <h5>{{ article.author.username }}</h5>
+                    {% if article.author.first_name %}
+                        <p class="text-muted">{{ article.author.get_full_name }}</p>
+                    {% endif %}
+                    <p class="text-muted">Membre depuis {{ article.author.date_joined|date:"M Y" }}</p>
+                </div>
+            </div>
+
+            <!-- Articles similaires -->
+            {% if related_articles %}
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-newspaper"></i> Articles similaires</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    {% for related in related_articles %}
+                    <a href="{% url 'blog:article_detail' related.slug %}" 
+                       class="list-group-item list-group-item-action">
+                        <h6 class="mb-1">{{ related.title }}</h6>
+                        <small class="text-muted">
+                            <i class="fas fa-eye"></i> {{ related.views }} vues
+                        </small>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
